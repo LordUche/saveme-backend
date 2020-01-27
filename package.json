@@ -6,8 +6,11 @@
   "scripts": {
     "start": "node build/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
-    "build": "babel src -d build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src -d build --source-maps",
+    "prebuild": "rm -rf build/*",
+    "prestart": "npm run build",
+    "test": "nyc mocha",
+    "coverage": "nyc report --reporter=lcov --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -28,13 +31,22 @@
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.9"
+    "mongoose": "^5.8.9",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
     "@babel/node": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
-    "nodemon": "^2.0.2"
+    "@babel/register": "^7.8.3",
+    "@istanbuljs/nyc-config-babel": "^3.0.0",
+    "@istanbuljs/nyc-config-hook-run-in-this-context": "^1.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "coveralls": "^3.0.9",
+    "mocha": "^7.0.1",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0"
   }
 }
